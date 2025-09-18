@@ -154,36 +154,124 @@ curl --request GET \
 ```
 
 #### Exemplo de Resposta
+
 ```json
 {
   "status": "success",
   "data": {
     "imovel": {
-      "codigo": "14786",
+      "codigo": "14804",
       "tipo": {
-        "codigo": "4",
-        "nome": "Apartamento",
-        "descricao": "Apartamentos"
+        "codigo": "25",
+        "nome": "Cobertura Duplex",
+        "descricao": "Cobertura Duplex"
       },
       "acao": {
-        "codigo": "2",
-        "nome": "Vende-se",
-        "descricao": "Vende-se imóveis"
+        "codigo": "3",
+        "nome": "Lançamento",
+        "descricao": "Lançamentos"
       },
-      "valor": 500000,
-      "valorFormatado": "500.000,00",
-      "descricao": "Vende-se aparatmento com linda vista ara cidade - Próximo a escola",
-      "enderecoCompleto": "",
-      "enderecoCEP": "99150-000",
-      "enderecoLogradouro": "Rua Felicio",
-      "linkImagemPrincipal": "https://img.sis.gestorimob.com.br/1/imoveis/thumb/741921764852918759.webp",
-      "detalhes": [],
-      "publicarNoSite": false,
+      "uso": "Residencial",
+      "status": "Imóvel novo",
+      "MCMV": false,
+      "valor": 2500000,
+      "valorFormatado": "2.500.000,00",
+      "titulo": "Vende-se cobertura",
+      "descricao": "<p>Magnífica cobertura duplex com vista panorâmica da cidade! Este exclusivo imóvel oferece sofisticação e conforto em cada detalhe, proporcionando uma experiência de moradia única em localização privilegiada no coração de Marau. Ideal para quem busca requinte e qualidade de vida excepcional.</p>",
+      "publicarNoSite": true,
+      "proprietarios": [
+        {
+          "codigo": 11,
+          "nome": "Madalena Regina Beria",
+          "documento": "287.904.730-78"
+        }
+      ],
+      "corretor": {
+        "nome": "Madalena Regina"
+      },
+      "linkImagemPrincipal": "https://img.sis.gestorimob.com.br/1/imoveis/thumb/403814699600554120.webp",
+      "localizacao": {
+        "cep": "99150-000",
+        "logradouro": "Av. Pres. Vargas",
+        "numero": "521",
+        "complemento": "Ap. 1002",
+        "bairro": "Centro",
+        "cidade": "Marau",
+        "estado": "RS",
+        "latitude": "-28.4497540",
+        "longitude": "-52.1986250",
+        "enderecoCompleto": "Av. Pres. Vargas, 521, Ap. 1002, Centro, Marau/RS, 99150-000"
+      },
+      "detalhes": {
+        "tags": "Cobertura, Apartamento Duplex",
+        "codigoInterno": "955959",
+        "matricula": "2559559",
+        "informacoes": "Informações internas"
+      },
       "imagens": [
         {
-          "ordem": 1757446529,
-          "link": "https://img.sis.gestorimob.com.br/1/imoveis/741921764852918759.webp",
+          "ordem": 0,
+          "link": "https://img.sis.gestorimob.com.br/1/imoveis/403814699600554120.webp",
           "legenda": ""
+        },
+        {
+          "ordem": 1,
+          "link": "https://img.sis.gestorimob.com.br/1/imoveis/122445860697528448.webp",
+          "legenda": ""
+        },
+        {
+          "ordem": 2,
+          "link": "https://img.sis.gestorimob.com.br/1/imoveis/595276296901460888.webp",
+          "legenda": ""
+        },
+        {
+          "ordem": 3,
+          "link": "https://img.sis.gestorimob.com.br/1/imoveis/347369501971460828.webp",
+          "legenda": ""
+        }
+      ],
+      "comodos": {
+        "sala": 2,
+        "quarto": 3,
+        "banheiro": 1,
+        "suite": 2,
+        "demisuite": 1,
+        "areaservico": 1,
+        "vaga": 2,
+        "lavabo": 2,
+        "cozinha": 1,
+        "sacada": 1
+      },
+      "areas": {
+        "total": "0.00",
+        "privativa": "200.00",
+        "lote": "0.00"
+      },
+      "IPTU": {
+        "valor": "1500.00",
+        "tipoCobranca": "Total",
+        "observacoes": ""
+      },
+      "seguroIncendio": {
+        "ativo": true,
+        "valor": "100",
+        "tipoCobranca": "Mensal",
+        "observacoes": ""
+      },
+      "seguroFianca": {
+        "ativo": true,
+        "valor": "100.00",
+        "tipoCobranca": "Total",
+        "observacoes": ""
+      },
+      "infraestruturas": [
+        {
+          "grupo": "Acabamentos",
+          "itens": ["Piso de pedra", "Esquadrias em  PVC"]
+        },
+        {
+          "grupo": "Apartamento",
+          "itens": ["Mobiliado", "Dependência de empregada", "Escritório"]
         }
       ]
     },
