@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Live Demo • API Site Parceiro</title>
+    <meta name="description" content="Demonstração interativa da API Site Parceiro para testar endpoints e visualizar requisições e respostas." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --bg: #0b1220;
+        --panel: #0f172a;
+        --muted: #94a3b8;
+        --text: #e2e8f0;
+        --brand: #3b82f6;
+        --ok: #22c55e;
+        --warn: #f59e0b;
+        --err: #ef4444;
+        --chip: #1e293b;
+        --code: #0a1222;
+        --border: #1f2a44;
+      }
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        background: radial-gradient(1200px 800px at 10% 10%, #0c1a38 0%, var(--bg) 45%), radial-gradient(800px 600px at 90% 20%, #0c243f 0%, transparent 50%) var(--bg);
+        background-attachment: fixed, fixed;
+        color: var(--text);
+        overflow-x: hidden;
+      }
+      .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+      header { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom: 18px; }
+      .brand { display:flex; align-items:center; gap:12px; }
+      .badge { background: #1f2937; color:#93c5fd; border:1px solid #1f2a44; padding: 2px 8px; border-radius: 999px; font-size:12px; }
+      h1 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: 0.2px; }
+      .panel {
+        background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.0));
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 16px;
+        box-shadow: 0 1px 0 #0b1220 inset, 0 0 0 1px rgba(255,255,255,0.02) inset;
+      }
+      .panel h2 { margin: 0 0 10px 0; font-size: 16px; font-weight: 700; }
+      .row { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+      @media (max-width: 900px) { .row { grid-template-columns: 1fr; } }
+      label { display:block; font-size:12px; color: var(--muted); margin-bottom:6px; }
+      input[type="text"], input[type="url"], input[type="number"], textarea, select, input[type="password"] {
+        width: 100%;
+        background: #0a1020;
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 10px 12px;
+        outline: none;
+      }
+      input::placeholder, textarea::placeholder { color: #6b7280; }
+      .hint { font-size: 12px; color: var(--muted); margin-top: 6px; }
+      .btn {
+        background: linear-gradient(180deg, #2563eb, #1d4ed8);
+        color: white; border: 0; border-radius: 8px; padding: 10px 14px; cursor: pointer; font-weight: 600;
+      }
+      .btn.secondary { background: #1f2937; color: #cbd5e1; border:1px solid var(--border); }
+      .btn.ghost { background: transparent; color: #93c5fd; border:1px dashed var(--border); }
+      .btn:disabled { opacity: 0.6; cursor:not-allowed; }
+      .btn-row { display:flex; gap:8px; flex-wrap: wrap; }
+  .grid-3 { display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; }
+  @media (max-width: 900px) { .grid-3 { grid-template-columns: 1fr; } }
+  .grid-2 { display:grid; grid-template-columns: repeat(2, 1fr); gap:12px; }
+  @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+      pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 12px; }
+      pre {
+        background: var(--code);
+        border: 1px solid var(--border);
+        padding: 12px;
+        border-radius: 10px;
+        overflow: auto;
+        white-space: pre-wrap;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+        max-height: 420px;
+      }
+  pre.expanded { max-height: none; overflow: auto; }
+      .kv { display:flex; gap:8px; align-items:center; flex-wrap: wrap; }
+      .chip { background: var(--chip); border:1px solid var(--border); color:#cbd5e1; padding: 4px 8px; border-radius: 999px; font-size: 12px; }
+      .status { font-weight:600; }
+      .status.ok { color: var(--ok); }
+      .status.warn { color: var(--warn); }
+      .status.err { color: var(--err); }
+      details { background: #0a1020; border:1px solid var(--border); border-radius: 8px; padding: 8px 12px; }
+      summary { cursor:pointer; color:#93c5fd; font-weight: 600; }
+      footer { color: var(--muted); font-size:12px; text-align:center; padding: 20px 0 60px; }
+      .divider { height:1px; background: var(--border); margin: 10px 0; }
+      .inline { display:flex; gap:8px; align-items:center; }
+      .right { margin-left:auto; }
+      .small { font-size:12px; }
+      .danger { color:#fecaca; }
+      .success { color:#bbf7d0; }
+      .muted { color: var(--muted); }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="brand">
+          <span class="badge">API RESTful</span>
+          <h1>Live Demo • API Site Parceiro</h1>
+        </div>
+        <div class="kv">
+          <span class="chip" id="tokenState">Sem token</span>
+          <span class="chip" id="rateInfo">Pronto</span>
+        </div>
+      </header>
+
+      <section class="panel" id="cfgPanel">
+        <h2>Configuração</h2>
+        <div class="row">
+          <div>
+            <label for="baseUrl">Base URL</label>
+            <input type="url" id="baseUrl" value="https://api-site-parceiro.gestorimob.com.br" />
+            <div class="hint">Defina o host da API. Use HTTPS.</div>
+          </div>
+          <div>
+            <label for="proxyUrl">Proxy (opcional)</label>
+            <input type="url" id="proxyUrl" placeholder="https://seu-proxy.exemplo.dev" />
+            <div class="hint">Use apenas se o navegador bloquear por CORS. O proxy deve encaminhar método, headers e corpo.</div>
+          </div>
+        </div>
+        <div class="row" style="margin-top:10px;">
+          <div>
+            <label for="clientId">Client ID</label>
+            <input type="text" id="clientId" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" autocomplete="off" />
+          </div>
+          <div>
+            <label for="secretId">Secret ID</label>
+            <input type="password" id="secretId" placeholder="••••••••••••••••••••••••••••••••" autocomplete="off" />
+          </div>
+        </div>
+        <div class="btn-row" style="margin-top:10px;">
+          <button class="btn" id="btnGetToken">Obter Token</button>
+          <button class="btn secondary" id="btnClearToken">Limpar Token</button>
+          <label class="inline small"><input type="checkbox" id="saveSecret" /> Salvar Secret no navegador (não recomendado)</label>
+          <span class="hint">Dica: você pode pré-preencher via URL hash: <code>#clientID=...&secretID=...</code></span>
+        </div>
+        <div class="divider"></div>
+        <div class="grid-3">
+          <div>
+            <label>Token atual</label>
+            <div class="btn-row" style="margin-bottom:6px;">
+              <button class="btn ghost" data-toggle-target="#tokenPreview">Expandir</button>
+            </div>
+            <pre id="tokenPreview">(sem token)</pre>
+          </div>
+          <div>
+            <label>Resposta do /accesstoken</label>
+            <div class="btn-row" style="margin-bottom:6px;">
+              <button class="btn ghost" data-toggle-target="#tokenResponse">Expandir</button>
+            </div>
+            <pre id="tokenResponse">(aguardando)</pre>
+          </div>
+          <div>
+            <label>cURL (token oculto por padrão)</label>
+            <div class="btn-row" style="margin-bottom:6px;">
+              <button class="btn secondary" id="btnCopyTokenCurl">Copiar cURL</button>
+              <label class="inline small"><input type="checkbox" id="showTokenInCurl" /> Exibir token no cURL</label>
+              <button class="btn ghost" data-toggle-target="#tokenCurl">Expandir</button>
+            </div>
+            <pre id="tokenCurl">curl --request POST \
+  --url "https://api-site-parceiro.gestorimob.com.br/accesstoken" \
+  --data '{
+    "clientID":"<CLIENT_ID>",
+    "secretID":"<SECRET_ID>"
+  }'
+</pre>
+          </div>
+        </div>
+        <details style="margin-top:8px;">
+          <summary>Notas de segurança</summary>
+          <div class="hint">Não recomendamos publicar ClientID e SecretID em páginas públicas. Utilize variáveis em tempo de execução, hash na URL apenas para demonstração, ou um proxy/funcão serverless para emitir tokens sem expor o Secret no cliente.</div>
+        </details>
+      </section>
+
+      <section class="panel" id="reqPanel">
+        <h2>Testar Endpoints</h2>
+        <div class="row">
+          <div>
+            <label for="endpoint">Endpoint</label>
+            <select id="endpoint">
+              <option value="GET /imoveis">GET /imoveis (lista)</option>
+              <option value="GET /imoveis?id=:id">GET /imoveis?id={id} (detalhe)</option>
+            </select>
+          </div>
+          <div class="inline" style="gap:12px; align-items:flex-end;">
+            <div>
+              <label for="page">page</label>
+              <input type="number" id="page" min="1" value="1" />
+            </div>
+            <div>
+              <label for="perPage">per_page</label>
+              <input type="number" id="perPage" min="1" max="100" value="10" />
+            </div>
+            <div>
+              <label for="imovelId">id</label>
+              <input type="text" id="imovelId" placeholder="ex: 14786" />
+            </div>
+            <button class="btn" id="btnSend">Executar</button>
+          </div>
+        </div>
+        <div class="hint" style="margin-top:6px;">Headers enviados: <code>Authorization: Bearer &lt;token&gt;</code>, <code>Content-Type: application/json</code></div>
+
+        <div class="grid-2" style="margin-top:10px;">
+          <div>
+            <label>Request (pré-visualização)</label>
+            <div class="btn-row" style="margin-bottom:6px;">
+              <button class="btn secondary" id="btnCopyRequest">Copiar request</button>
+              <button class="btn ghost" data-toggle-target="#reqPreview">Expandir</button>
+            </div>
+            <pre id="reqPreview"></pre>
+          </div>
+          <div>
+            <label>cURL</label>
+            <div class="btn-row" style="margin-bottom:6px;">
+              <button class="btn secondary" id="btnCopyCurl">Copiar cURL</button>
+              <label class="inline small"><input type="checkbox" id="showAuthInCurl" /> Exibir token no cURL</label>
+              <button class="btn ghost" data-toggle-target="#curlPreview">Expandir</button>
+            </div>
+            <pre id="curlPreview"></pre>
+          </div>
+        </div>
+        <div style="margin-top:12px;">
+          <label>Resposta</label>
+          <div class="btn-row" style="margin-bottom:6px;">
+            <button class="btn secondary" id="btnCopyResponse">Copiar JSON</button>
+            <button class="btn ghost" id="btnToggleExpand">Expandir</button>
+          </div>
+          <pre id="resPreview">(aguardando)</pre>
+        </div>
+
+        <details style="margin-top:8px;">
+          <summary>Paginação rápida</summary>
+          <div class="btn-row" style="margin-top:8px;">
+            <button class="btn secondary" id="btnPrev" disabled>Prev</button>
+            <button class="btn secondary" id="btnNext" disabled>Next</button>
+            <span class="small muted" id="pageInfo"></span>
+          </div>
+        </details>
+      </section>
+
+      <section class="panel">
+        <h2>Ajuda</h2>
+        <details>
+          <summary>Visão geral dos endpoints suportados</summary>
+          <div class="hint">
+            • POST <code>/accesstoken</code> — emite o token de acesso a partir de <em>ClientID</em> e <em>SecretID</em>.<br />
+            • GET <code>/imoveis</code> — lista de imóveis com paginação (<code>page</code>, <code>per_page</code>).<br />
+            • GET <code>/imoveis?id=...</code> — detalhe de um imóvel específico.
+          </div>
+        </details>
+      </section>
+
+      <footer>
+        Feito para demonstração. Não compartilhe segredos. • <span class="muted">API Site Parceiro</span><br/>
+        <span class="muted">O projeto pertence ao Gestor Imobiliária. Site <a href="https://gestorimobiliaria.com.br" target="_blank" rel="noopener noreferrer">gestorimobiliaria.com.br</a> by Objetiva Software.</span>
+      </footer>
+    </div>
+
+    <script>
+      // Estado global simples
+      const state = {
+        token: null,
+        tokenType: 'Bearer',
+        tokenRawResponse: null,
+        tokenExp: null,
+        baseUrl: 'https://api-site-parceiro.gestorimob.com.br',
+        proxyUrl: '',
+        lastListLinks: { next: null, prev: null },
+      };
+
+      // Utilitários
+      const $ = (sel) => document.querySelector(sel);
+      const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+      function jsonPretty(v) { try { return JSON.stringify(v, null, 2); } catch { return String(v); } }
+      function clip(text) { navigator.clipboard?.writeText(text).catch(() => {}); }
+      function redactToken(t) { if (!t) return ''; return t.length > 16 ? t.slice(0,8) + '…' + t.slice(-6) : '…redacted…'; }
+      function epochToDate(exp) {
+        if (!exp) return null;
+        const n = Number(exp);
+        const ts = n > 1e12 ? n : n * 1000; // suporta segundos ou ms
+        return new Date(ts);
+      }
+      function buildUrl(base, pathWithQs) {
+        const url = new URL(pathWithQs, base);
+        return url.toString();
+      }
+      function withProxy(url) {
+        const p = state.proxyUrl?.trim();
+        if (!p) return url;
+        // Estratégia: proxy deve aceitar URL completa via path ou query; aqui usamos um padrão comum /?url=
+        try {
+          const u = new URL(p);
+          // Se o proxy aceitar path direto (ex: https://proxy/https://host/path)
+          if (!u.search && p.endsWith('/')) return p + url;
+          // fallback: query param ?url=
+          u.searchParams.set('url', url);
+          return u.toString();
+        } catch {
+          return url;
+        }
+      }
+
+      // Persistência local mínima
+      function loadFromStorage() {
+        try {
+          const baseUrl = localStorage.getItem('demo.baseUrl');
+          const proxyUrl = localStorage.getItem('demo.proxyUrl');
+          const clientId = localStorage.getItem('demo.clientId');
+          const secretId = sessionStorage.getItem('demo.secretId'); // não persistimos por padrão
+          if (baseUrl) $('#baseUrl').value = baseUrl;
+          if (proxyUrl) $('#proxyUrl').value = proxyUrl;
+          if (clientId) $('#clientId').value = clientId;
+          if (secretId) { $('#secretId').value = secretId; $('#saveSecret').checked = true; }
+        } catch {}
+      }
+      function saveToStorage() {
+        try {
+          localStorage.setItem('demo.baseUrl', $('#baseUrl').value.trim());
+          localStorage.setItem('demo.clientId', $('#clientId').value.trim());
+          const proxy = $('#proxyUrl').value.trim();
+          if (proxy) localStorage.setItem('demo.proxyUrl', proxy); else localStorage.removeItem('demo.proxyUrl');
+          const saveSecret = $('#saveSecret').checked;
+          if (saveSecret) sessionStorage.setItem('demo.secretId', $('#secretId').value);
+          else sessionStorage.removeItem('demo.secretId');
+        } catch {}
+      }
+
+      function parseHashPrefill() {
+        // Permite pre-fill via #clientID=...&secretID=...
+        const h = location.hash?.replace(/^#/, '');
+        if (!h) return;
+        const params = new URLSearchParams(h);
+        const cid = params.get('clientID');
+        const sid = params.get('secretID');
+        if (cid) $('#clientId').value = cid;
+        if (sid) $('#secretId').value = sid;
+      }
+
+      function setTokenUI() {
+        const chip = $('#tokenState');
+        const preview = $('#tokenPreview');
+        if (!state.token) {
+          chip.textContent = 'Sem token';
+          chip.className = 'chip';
+          preview.textContent = '(sem token)';
+          return;
+        }
+        chip.textContent = 'Token ativo';
+        chip.className = 'chip';
+        preview.textContent = state.token;
+      }
+
+      async function getToken() {
+        const baseUrl = $('#baseUrl').value.trim();
+        const clientID = $('#clientId').value.trim();
+        const secretID = $('#secretId').value;
+        if (!baseUrl || !clientID || !secretID) {
+          alert('Preencha Base URL, Client ID e Secret ID.');
+          return;
+        }
+        state.baseUrl = baseUrl; state.proxyUrl = $('#proxyUrl').value.trim();
+        saveToStorage();
+        $('#btnGetToken').disabled = true;
+        const url = buildUrl(baseUrl, '/accesstoken');
+        const body = { clientID, secretID };
+        const req = new Request(withProxy(url), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        const t0 = performance.now();
+        try {
+          const res = await fetch(req);
+          const dt = performance.now() - t0;
+          const json = await res.json().catch(() => ({}));
+          $('#tokenResponse').textContent = jsonPretty(json);
+          if (!res.ok) throw new Error('Falha ao obter token: ' + res.status + ' ' + res.statusText);
+          const token = json.access_token || json.token || null;
+          const tokType = json.token_type || 'Bearer';
+          const exp = json.expires_in || json.expires || null;
+          state.token = token; state.tokenType = tokType; state.tokenRawResponse = json; state.tokenExp = epochToDate(exp);
+          setTokenUI();
+          updateTokenCurl();
+          updateRateInfo(dt, res);
+        } catch (e) {
+          $('#tokenResponse').textContent = String(e);
+          state.token = null; setTokenUI(); updateTokenCurl();
+        } finally {
+          $('#btnGetToken').disabled = false;
+        }
+      }
+
+      function clearToken() {
+        state.token = null; state.tokenExp = null; state.tokenRawResponse = null;
+        setTokenUI(); updateTokenCurl(); $('#tokenResponse').textContent = '(resetado)';
+      }
+
+      function updateRateInfo(ms, res) {
+        const el = $('#rateInfo');
+        const pieces = [];
+        if (ms != null) pieces.push(Math.round(ms) + 'ms');
+        if (res && 'status' in res) pieces.push('HTTP ' + res.status);
+        el.textContent = pieces.join(' • ') || 'Pronto';
+      }
+
+  function updateTokenCurl() {
+    const baseUrl = $('#baseUrl').value.trim() || state.baseUrl;
+    const clientID = $('#clientId').value.trim() || '<CLIENT_ID>';
+    const secretID = $('#secretId').value || '<SECRET_ID>';
+    const bodyStr = JSON.stringify({ clientID, secretID });
+    // Escapa single quotes para shell: ' -> '\'' (representado como '"'"' no literal)
+    const bodyForSh = bodyStr.replace(/'/g, `'"'"'`);
+    const curl = `curl --request POST \
+  --url "${buildUrl(baseUrl, '/accesstoken')}" \
+  --header "Content-Type: application/json" \
+  --data '${bodyForSh}'`;
+    $('#tokenCurl').textContent = curl;
+  }
+
+      function buildRequestPreview() {
+        const baseUrl = $('#baseUrl').value.trim();
+        const ep = $('#endpoint').value;
+        const page = Number($('#page').value || 1);
+        const perPage = Number($('#perPage').value || 10);
+        const id = $('#imovelId').value.trim();
+        let method = 'GET';
+        let path = '/imoveis';
+        const qs = new URLSearchParams();
+        if (ep.startsWith('GET /imoveis?id')) {
+          if (id) qs.set('id', id);
+        } else {
+          if (page > 0) qs.set('page', String(page));
+          if (perPage > 0) qs.set('per_page', String(perPage));
+        }
+        const fullPath = qs.toString() ? path + '?' + qs.toString() : path;
+        const url = buildUrl(baseUrl, fullPath);
+        const headers = {
+          'Authorization': state.token ? `${state.tokenType} ${state.token}` : '(sem token)',
+          'Content-Type': 'application/json',
+        };
+        return { method, url, fullPath, headers };
+      }
+
+      function updateRequestPanels() {
+        const { method, url, headers } = buildRequestPreview();
+        const reqObj = { method, url, headers };
+        $('#reqPreview').textContent = jsonPretty(reqObj);
+        const showAuth = $('#showAuthInCurl').checked;
+        const authValue = headers.Authorization;
+        const safeAuth = showAuth ? authValue : (authValue && authValue !== '(sem token)' ? (headers.Authorization.split(' ')[0] + ' ' + redactToken(headers.Authorization.split(' ')[1])) : '(sem token)');
+        const curl = [
+          `curl --request ${method} \\\n+  --url "${url}" \\\n+  --header "Authorization: ${safeAuth}" \\\n+  --header "Content-Type: application/json"`
+        ].join('\n');
+        $('#curlPreview').textContent = curl;
+      }
+
+      async function sendRequest() {
+        const { method, url, headers, fullPath } = buildRequestPreview();
+        if (!state.token) {
+          alert('Obtenha um token primeiro.');
+          return;
+        }
+        const req = new Request(withProxy(url), { method, headers: {
+          'Authorization': headers.Authorization,
+          'Content-Type': 'application/json'
+        }});
+        $('#btnSend').disabled = true; updateRateInfo();
+        const t0 = performance.now();
+        try {
+          const res = await fetch(req);
+          const dt = performance.now() - t0;
+          updateRateInfo(dt, res);
+          const text = await res.text();
+          let json; try { json = JSON.parse(text); } catch { json = { raw: text }; }
+          $('#resPreview').textContent = jsonPretty(json);
+          // Paginação
+          try {
+            const links = json?.data?._links || json?._links;
+            const meta = json?.meta;
+            const next = links?.next?.href || null;
+            const prev = links?.prev?.href || null;
+            state.lastListLinks = { next, prev };
+            $('#btnNext').disabled = !next; $('#btnPrev').disabled = !prev;
+            const info = [];
+            if (meta?.page != null) info.push('page: ' + meta.page);
+            if (meta?.per_page != null) info.push('per_page: ' + meta.per_page);
+            if (meta?.total != null) info.push('total: ' + meta.total);
+            if (meta?.total_pages != null) info.push('total_pages: ' + meta.total_pages);
+            $('#pageInfo').textContent = info.join(' • ');
+          } catch {}
+        } catch (e) {
+          $('#resPreview').textContent = String(e);
+        } finally {
+          $('#btnSend').disabled = false;
+        }
+      }
+
+      async function followLink(which) {
+        const link = state.lastListLinks?.[which];
+        if (!link) return;
+        const u = new URL(link);
+        const page = u.searchParams.get('page');
+        const perPage = u.searchParams.get('per_page');
+        if (page) $('#page').value = page;
+        if (perPage) $('#perPage').value = perPage;
+        await sendRequest();
+      }
+
+      function hook() {
+        // Config init
+        loadFromStorage();
+        parseHashPrefill();
+        updateTokenCurl();
+        updateRequestPanels();
+
+        $('#baseUrl').addEventListener('input', () => { saveToStorage(); updateTokenCurl(); updateRequestPanels(); });
+        $('#proxyUrl').addEventListener('input', () => { saveToStorage(); });
+        $('#clientId').addEventListener('input', () => { saveToStorage(); updateTokenCurl(); });
+        $('#secretId').addEventListener('input', () => { updateTokenCurl(); });
+        $('#saveSecret').addEventListener('change', saveToStorage);
+        $('#showTokenInCurl').addEventListener('change', updateTokenCurl);
+        $('#showAuthInCurl').addEventListener('change', updateRequestPanels);
+
+        $('#endpoint').addEventListener('change', updateRequestPanels);
+        $('#page').addEventListener('input', updateRequestPanels);
+        $('#perPage').addEventListener('input', updateRequestPanels);
+        $('#imovelId').addEventListener('input', updateRequestPanels);
+
+        $('#btnGetToken').addEventListener('click', getToken);
+        $('#btnClearToken').addEventListener('click', clearToken);
+        $('#btnSend').addEventListener('click', sendRequest);
+        $('#btnPrev').addEventListener('click', () => followLink('prev'));
+        $('#btnNext').addEventListener('click', () => followLink('next'));
+
+        // Copy helpers
+        $('#btnCopyTokenCurl').addEventListener('click', () => clip($('#tokenCurl').textContent));
+        $('#btnCopyRequest').addEventListener('click', () => clip($('#reqPreview').textContent));
+        $('#btnCopyCurl').addEventListener('click', () => clip($('#curlPreview').textContent));
+        $('#btnCopyResponse').addEventListener('click', () => clip($('#resPreview').textContent));
+        $('#btnToggleExpand').addEventListener('click', () => {
+          const pre = $('#resPreview');
+          const btn = $('#btnToggleExpand');
+          const expanded = pre.classList.toggle('expanded');
+          btn.textContent = expanded ? 'Colapsar' : 'Expandir';
+        });
+
+        // Generic expand/collapse for any button with data-toggle-target
+        document.querySelectorAll('button[data-toggle-target]').forEach(btn => {
+          const targetSel = btn.getAttribute('data-toggle-target');
+          const target = document.querySelector(targetSel);
+          if (!target) return;
+          btn.addEventListener('click', () => {
+            const expanded = target.classList.toggle('expanded');
+            btn.textContent = expanded ? 'Colapsar' : 'Expandir';
+          });
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', hook);
+    </script>
+  </body>
+  </html>
