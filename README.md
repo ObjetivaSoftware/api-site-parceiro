@@ -7,6 +7,9 @@
 
 ---
 
+## Live Demo
+https://objetivasoftware.github.io/api-site-parceiro/
+
 ## 🌐 Base URL
 
 ```
