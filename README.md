@@ -89,34 +89,62 @@ curl --request GET \
   "data": {
     "imoveis": [
       {
-        "codigo": "14786",
+        "codigo": "1307",
+        "status": "Em construção",
+        "comodos": {
+          "sala": 0,
+          "quarto": 1,
+          "banheiro": 1,
+          "suite": 0,
+          "demisuite": 0,
+          "areaservico": 0,
+          "vaga": 0,
+          "lavabo": 0,
+          "cozinha": 0,
+          "sacada": 0
+        },
+        "areas": {
+          "total": "0.00",
+          "privativa": "67.65",
+          "lote": "0.00"
+        },
         "tipo": {
-          "codigo": "4",
-          "nome": "Apartamento",
-          "descricao": "Apartamentos",
-          "acaoCodigo": "2"
+          "codigo": "20",
+          "nome": "Cobertura Duplex",
+          "descricao": "Cobertura Duplexs",
+          "acaoCodigo": "3"
         },
         "acao": {
-          "codigo": "2",
-          "nome": "Vende-se",
-          "descricao": "Vende-se imóveis"
+          "codigo": "3",
+          "nome": "Lançamento",
+          "descricao": "Lançamentos"
         },
-        "valor": 500000,
-        "valorFormatado": "500.000,00",
-        "descricao": "Vende-se aparatmento com linda vista ara cidade - Próximo a escola",
-        "enderecoCompleto": "Rua Felicio, 10, Ap 801, Centro, Marau/Rio Grande do Sul, 99150-000",
-        "linkImagemPrincipal": "https://img.sis.gestorimob.com.br/1/imoveis/thumb/741921764852918759.webp",
-        "detalhes": []
+        "valor": 325600,
+        "endereco": {
+          "cep": "01507-001",
+          "logradouro": "Rua Barão de Iguape, 855",
+          "numero": "855",
+          "complemento": "",
+          "bairro": "Liberdade",
+          "cidade": "São Paulo",
+          "estado": "SP",
+          "latitude": -23.557998,
+          "longitude": -46.62864
+        },
+        "valorFormatado": "325.600,00",
+        "descricao": "Empreendimento Residencial em Liberdade São Paulo - SP",
+        "enderecoCompleto": "Rua Barão de Iguape, 855, 855, Liberdade, São Paulo/São Paulo, 01507-001",
+        "linkImagemPrincipal": "https://img.sis.gestorimob.com.br/461/imoveis/thumb/external-1630700-79339_51802-1630700.jpg"
       }
     ],
     "_links": {
       "self": {
-        "href": "http://localhost:8080/imoveis?page=1&per_page=10",
+        "href": "https://api-site-parceiro.gestorimob.com.br/imoveis?page=1&per_page=1",
         "title": "Listagem de imóveis - página 1",
         "type": "application/json"
       },
       "next": {
-        "href": "http://localhost:8080/imoveis?page=2&per_page=10",
+        "href": "https://api-site-parceiro.gestorimob.com.br/imoveis?page=2&per_page=1",
         "title": "Próxima página",
         "type": "application/json"
       },
@@ -124,11 +152,11 @@ curl --request GET \
     }
   },
   "meta": {
-    "timestamp": "2025-09-10T16:41:35Z",
-    "total": 28,
+    "timestamp": "2025-09-26T17:07:12Z",
+    "total": 1997,
     "page": 1,
-    "per_page": 10,
-    "total_pages": 3
+    "per_page": 1,
+    "total_pages": 1997
   }
 }
 ```
@@ -163,11 +191,11 @@ curl --request GET \
   "status": "success",
   "data": {
     "imovel": {
-      "codigo": "14804",
+      "codigo": "1307",
       "tipo": {
-        "codigo": "25",
+        "codigo": "20",
         "nome": "Cobertura Duplex",
-        "descricao": "Cobertura Duplex"
+        "descricao": "Cobertura Duplexs"
       },
       "acao": {
         "codigo": "3",
@@ -175,119 +203,234 @@ curl --request GET \
         "descricao": "Lançamentos"
       },
       "uso": "Residencial",
-      "status": "Imóvel novo",
+      "status": "Em construção",
       "MCMV": false,
-      "valor": 2500000,
-      "valorFormatado": "2.500.000,00",
-      "titulo": "Vende-se cobertura",
-      "descricao": "<p>Magnífica cobertura duplex com vista panorâmica da cidade! Este exclusivo imóvel oferece sofisticação e conforto em cada detalhe, proporcionando uma experiência de moradia única em localização privilegiada no coração de Marau. Ideal para quem busca requinte e qualidade de vida excepcional.</p>",
+      "valor": 325600,
+      "valorFormatado": "325.600,00",
+      "titulo": "Empreendimento Residencial em Liberdade São Paulo - SP",
+      "descricao": "Um empreendimento completo com toda segurança, conforto e lazer que você merece. Preço e disponibilidade do imóvel sujeitos a alteração sem aviso prévio.",
       "publicarNoSite": true,
-      "proprietarios": [
-        {
-          "codigo": 11,
-          "nome": "Madalena Regina Beria",
-          "documento": "287.904.730-78"
-        }
-      ],
+      "proprietarios": [],
       "corretor": {
-        "nome": "Madalena Regina"
+        "nome": "Julio Barbiellini"
       },
-      "linkImagemPrincipal": "https://img.sis.gestorimob.com.br/1/imoveis/thumb/403814699600554120.webp",
+      "linkImagemPrincipal": "https://img.sis.gestorimob.com.br/461/imoveis/thumb/external-1630700-79339_51802-1630700.jpg",
       "localizacao": {
-        "cep": "99150-000",
-        "logradouro": "Av. Pres. Vargas",
-        "numero": "521",
-        "complemento": "Ap. 1002",
-        "bairro": "Centro",
-        "cidade": "Marau",
-        "estado": "RS",
-        "latitude": "-28.4497540",
-        "longitude": "-52.1986250",
-        "enderecoCompleto": "Av. Pres. Vargas, 521, Ap. 1002, Centro, Marau/RS, 99150-000"
+        "cep": "01507-001",
+        "logradouro": "Rua Barão de Iguape, 855",
+        "numero": "855",
+        "complemento": "",
+        "bairro": "Liberdade",
+        "cidade": "São Paulo",
+        "estado": "SP",
+        "latitude": "-23.5579980",
+        "longitude": "-46.6286400",
+        "enderecoCompleto": "Rua Barão de Iguape, 855, 855, Liberdade, São Paulo/SP, 01507-001"
       },
       "detalhes": {
-        "tags": "Cobertura, Apartamento Duplex",
-        "codigoInterno": "955959",
-        "matricula": "2559559",
-        "informacoes": "Informações internas"
+        "tags": "",
+        "codigoInterno": "79339_51802",
+        "matricula": "",
+        "informacoes": "Referência: 11502 \nAtualizado em: 18/09/2025 07:17:18"
       },
       "imagens": [
         {
-          "ordem": 0,
-          "link": "https://img.sis.gestorimob.com.br/1/imoveis/403814699600554120.webp",
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630700-79339_51802-1630700.jpg",
           "legenda": ""
         },
         {
-          "ordem": 1,
-          "link": "https://img.sis.gestorimob.com.br/1/imoveis/122445860697528448.webp",
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630701-79339_51802-1630701.jpg",
           "legenda": ""
         },
         {
-          "ordem": 2,
-          "link": "https://img.sis.gestorimob.com.br/1/imoveis/595276296901460888.webp",
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630702-79339_51802-1630702.jpg",
           "legenda": ""
         },
         {
-          "ordem": 3,
-          "link": "https://img.sis.gestorimob.com.br/1/imoveis/347369501971460828.webp",
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630703-79339_51802-1630703.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630704-79339_51802-1630704.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630705-79339_51802-1630705.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630706-79339_51802-1630706.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630707-79339_51802-1630707.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630708-79339_51802-1630708.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630709-79339_51802-1630709.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630710-79339_51802-1630710.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630711-79339_51802-1630711.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630712-79339_51802-1630712.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630713-79339_51802-1630713.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630714-79339_51802-1630714.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630715-79339_51802-1630715.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630716-79339_51802-1630716.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630717-79339_51802-1630717.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630718-79339_51802-1630718.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630719-79339_51802-1630719.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630720-79339_51802-1630720.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630721-79339_51802-1630721.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630722-79339_51802-1630722.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630723-79339_51802-1630723.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630724-79339_51802-1630724.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630725-79339_51802-1630725.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630726-79339_51802-1630726.jpg",
+          "legenda": ""
+        },
+        {
+          "ordem": 5000,
+          "link": "https://img.sis.gestorimob.com.br/461/imoveis/external-1630727-79339_51802-1630727.jpg",
           "legenda": ""
         }
       ],
       "comodos": {
-        "sala": 2,
-        "quarto": 3,
+        "sala": 0,
+        "quarto": 1,
         "banheiro": 1,
-        "suite": 2,
-        "demisuite": 1,
-        "areaservico": 1,
-        "vaga": 2,
-        "lavabo": 2,
-        "cozinha": 1,
-        "sacada": 1
+        "suite": 0,
+        "demisuite": 0,
+        "areaservico": 0,
+        "vaga": 0,
+        "lavabo": 0,
+        "cozinha": 0,
+        "sacada": 0
       },
       "areas": {
         "total": "0.00",
-        "privativa": "200.00",
+        "privativa": "67.65",
         "lote": "0.00"
       },
       "IPTU": {
-        "valor": "1500.00",
-        "tipoCobranca": "Total",
+        "valor": 0,
+        "tipoCobranca": "Mensal",
         "observacoes": ""
       },
       "seguroIncendio": {
-        "ativo": true,
-        "valor": "100",
+        "ativo": false,
+        "valor": 0,
         "tipoCobranca": "Mensal",
         "observacoes": ""
       },
       "seguroFianca": {
-        "ativo": true,
-        "valor": "100.00",
+        "ativo": false,
+        "valor": 0,
         "tipoCobranca": "Total",
         "observacoes": ""
       },
-      "infraestruturas": [
-        {
-          "grupo": "Acabamentos",
-          "itens": ["Piso de pedra", "Esquadrias em  PVC"]
-        },
-        {
-          "grupo": "Apartamento",
-          "itens": ["Mobiliado", "Dependência de empregada", "Escritório"]
-        }
-      ]
+      "infraestruturas": []
     },
     "_links": {
       "self": {
-        "href": "http://localhost:8080/imovel?id=14786",
+        "href": "https://api-site-parceiro.gestorimob.com.br/imovel?id=1307",
         "title": "Informação do imóvel",
+        "type": "application/json"
+      },
+      "update": {
+        "href": "https://api-site-parceiro.gestorimob.com.br/imovel?id=1307",
+        "title": "Atualizar informação do imóvel",
+        "type": "application/json"
+      },
+      "delete": {
+        "href": "https://api-site-parceiro.gestorimob.com.br/imovel?id=1307",
+        "title": "Deletar o imóvel",
         "type": "application/json"
       }
     }
   },
   "meta": {
-    "timestamp": "2025-09-10T16:41:55Z"
+    "timestamp": "2025-09-26T17:09:05Z"
   }
 }
 ```
